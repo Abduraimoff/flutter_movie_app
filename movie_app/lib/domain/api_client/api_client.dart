@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:movie_app/models/genre.dart';
+import 'package:movie_app/models/movie_detail.dart';
 import 'package:movie_app/models/now_playing_movies.dart';
 import 'package:movie_app/models/person.dart';
 import 'package:movie_app/models/popular_movies.dart';
@@ -125,8 +126,7 @@ class ApiClient {
     }
   }
 
-
-  Future<List<Person>> getTrendingPerson () async {
+  Future<List<Person>> getTrendingPerson() async {
     try {
       final url = Uri.parse(
           'https://api.themoviedb.org/3/trending/person/week?api_key=3aa5c01abcf1e72b1bb20e560dff6885');
@@ -141,5 +141,34 @@ class ApiClient {
     } catch (e) {
       throw Exception('Exception occured: $e ');
     }
+  }
+
+  Future<MovieDetail> getMovieDetail(var movieId) async {
+    print('getMovieDetail');
+    try {
+      final url = Uri.parse(
+          'https://api.themoviedb.org/3/movie/$movieId?api_key=3aa5c01abcf1e72b1bb20e560dff6885&language=en-US');
+      final response = await http.get(url);
+      var movieDetail = MovieDetail.fromJson(response.body);
+      movieDetail.trailerId = await getYoutubeId(movieId);
+      return movieDetail;
+    } catch (e) {
+      throw Exception('Exception occured: $e ');
+    }
+  }
+}
+
+Future<String> getYoutubeId(var id) async {
+  try {
+    final url = Uri.parse(
+        'https://api.themoviedb.org/3/movie/$id/videos?api_key=3aa5c01abcf1e72b1bb20e560dff6885');
+    final response = await http.get(url);
+    final body = response.body;
+    final json = jsonDecode(body);
+    final youtubeId = json['results'][0]['key'];
+
+    return youtubeId;
+  } catch (e) {
+    throw Exception('Exception occured: $e ');
   }
 }

@@ -4,6 +4,7 @@ import 'package:movie_app/pages/movie_detail_page.dart';
 import 'package:provider/provider.dart';
 
 import '../domain/api_client/api_client.dart';
+import '../providers/movie_detail_provider.dart';
 import '../providers/movie_provider.dart';
 
 class CustomCarouselWidget extends StatelessWidget {
@@ -21,7 +22,11 @@ class CustomCarouselWidget extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             var route = MaterialPageRoute(
-              builder: (context) => MovieDetailPage(movie: movie),
+              builder: (context) => ChangeNotifierProvider(
+                create: (context) => MovieDetailProvider(movie.id.toString())
+                  ..loadMovieDetail(movie.id.toString()),
+                child: const MovieDetailPage(),
+              ),
             );
             Navigator.push(context, route);
           },

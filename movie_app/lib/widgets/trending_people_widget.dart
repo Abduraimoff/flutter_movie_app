@@ -16,11 +16,12 @@ class TrendingPeopleWidget extends StatelessWidget {
       height: 115,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: people.length,
+        itemCount: people.length-12,
         separatorBuilder: (context, index) =>
             const VerticalDivider(color: Colors.transparent, width: 5),
         itemBuilder: (context, index) {
           final person = people[index];
+          final profilePath = person.profilePath;
           return Column(
             children: [
               Card(
@@ -34,13 +35,12 @@ class TrendingPeopleWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image.network(
-                      'https://image.tmdb.org/t/p/w200/${person.profilePath}',
-                      filterQuality: FilterQuality.high,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.network(
+                        'https://image.tmdb.org/t/p/w200/${person.profilePath}',
+                        filterQuality: FilterQuality.high,
+                        fit: BoxFit.cover,
+                      )),
                 ),
               ),
               Text(

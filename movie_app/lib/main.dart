@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:provider/provider.dart';
 import 'pages/auth_page.dart';
 import 'pages/home_page.dart';
-import 'providers/genre_provider.dart';
 import 'providers/person_provider.dart';
 import 'utils/colors.dart';
 
@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // status bar color
+    ));
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => MovieProvider()),

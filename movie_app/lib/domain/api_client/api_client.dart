@@ -9,6 +9,9 @@ import 'package:movie_app/models/now_playing_movies.dart';
 import 'package:movie_app/models/person.dart';
 import 'package:movie_app/models/popular_movies.dart';
 
+import '../../models/cast.dart';
+import '../../models/upcoming_movies.dart';
+
 class ApiClient {
   static const _host = 'https://api.themoviedb.org/3';
   static const _imageUrl = 'https://image.tmdb.org/t/p/w500/';
@@ -109,6 +112,19 @@ class ApiClient {
     }
   }
 
+  Future<UpcomingMovies> getUpcomingMovies(int page) async {
+    try {
+      final url = Uri.parse(
+          'https://api.themoviedb.org/3/movie/upcoming?api_key=3aa5c01abcf1e72b1bb20e560dff6885&language=en-US&page=$page');
+      final response = await http.get(url);
+      var movies = UpcomingMovies.fromJson(response.body);
+
+      return movies;
+    } catch (e) {
+      throw Exception('Exception occured: $e ');
+    }
+  }
+
   Future<List<Genre>> getGenres() async {
     try {
       final url = Uri.parse(
@@ -151,24 +167,42 @@ class ApiClient {
       final response = await http.get(url);
       var movieDetail = MovieDetail.fromJson(response.body);
       movieDetail.trailerId = await getYoutubeId(movieId);
+      movieDetail.castList = await getCastList(movieId);
       return movieDetail;
     } catch (e) {
       throw Exception('Exception occured: $e ');
     }
   }
-}
 
-Future<String> getYoutubeId(var id) async {
-  try {
-    final url = Uri.parse(
-        'https://api.themoviedb.org/3/movie/$id/videos?api_key=3aa5c01abcf1e72b1bb20e560dff6885');
-    final response = await http.get(url);
-    final body = response.body;
-    final json = jsonDecode(body);
-    final youtubeId = json['results'][0]['key'];
+  Future<String> getYoutubeId(var id) async {
+    try {
+      final url = Uri.parse(
+          'https://api.themoviedb.org/3/movie/$id/videos?api_key=3aa5c01abcf1e72b1bb20e560dff6885');
+      final response = await http.get(url);
+      final body = response.body;
+      final json = jsonDecode(body);
+      final youtubeId = json['results'][0]['key'];
 
-    return youtubeId;
-  } catch (e) {
-    throw Exception('Exception occured: $e ');
+      return youtubeId;
+    } catch (e) {
+      throw Exception('Exception occured: $e ');
+    }
+  }
+
+  Future<List<Cast>> getCastList(var id) async {
+    try {
+      final url = Uri.parse(
+          'https://api.themoviedb.org/3/movie/$id/credits?api_key=3aa5c01abcf1e72b1bb20e560dff6885');
+      final response = await http.get(url);
+      final body = response.body;
+      final json = jsonDecode(body);
+      final list = json['cast'] as List;
+
+      List<Cast> castList = list.map((c) => Cast.fromMap(c)).toList();
+
+      return castList;
+    } catch (e) {
+      throw Exception('Exception occured: $e ');
+    }
   }
 }

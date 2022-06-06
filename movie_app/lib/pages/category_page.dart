@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../models/genre.dart';
 import '../widgets/genre_item.dart';
 import '../widgets/popular_movies_widget.dart';
+import '../widgets/upcoming_movies_widget.dart';
 
 class BuildWidgetCategory extends StatefulWidget {
   final int selectedGenre;
@@ -26,6 +27,7 @@ class _BuildWidgetCategory extends State<BuildWidgetCategory> {
     selectedGenre = widget.selectedGenre;
     context.read<GenreProvider>().loadGenres();
     context.read<MovieProvider>().loadPopularMovies(1);
+    context.read<MovieProvider>().loadUpcomingMovies(1);
   }
 
   @override
@@ -35,6 +37,7 @@ class _BuildWidgetCategory extends State<BuildWidgetCategory> {
     }
     List<Genre> genres = context.watch<GenreProvider>().genres;
     List<Movie> popularMovies = context.watch<MovieProvider>().popularMovies;
+    List<Movie> upcomingMovies = context.watch<MovieProvider>().upcomingMovies;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,6 +78,17 @@ class _BuildWidgetCategory extends State<BuildWidgetCategory> {
         ),
         const SizedBox(height: 10),
         PopularMoviesWidget(popularMovies: popularMovies),
+        const SizedBox(height: 10),
+        Text(
+          'upcoming movies'.toUpperCase(),
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.black45,
+          ),
+        ),
+        const SizedBox(height: 10),
+        UpcomingMoviesWidget(upcomingMovies: upcomingMovies),
       ],
     );
   }

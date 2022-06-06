@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -7,25 +9,22 @@ import '../models/movie.dart';
 import '../pages/movie_detail_page.dart';
 import '../providers/movie_detail_provider.dart';
 
-class PopularMoviesWidget extends StatelessWidget {
-  const PopularMoviesWidget({
-    Key? key,
-    required this.popularMovies,
-  }) : super(key: key);
+class UpcomingMoviesWidget extends StatelessWidget {
+final List<Movie> upcomingMovies;
 
-  final List<Movie> popularMovies;
+  const UpcomingMoviesWidget({Key? key, required this.upcomingMovies}) : super(key: key);
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 314,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: popularMovies.length,
+        itemCount: upcomingMovies.length,
         separatorBuilder: (context, index) =>
             const VerticalDivider(color: Colors.transparent, width: 15),
         itemBuilder: (context, index) {
-          final Movie movie = popularMovies[index];
+          final Movie movie = upcomingMovies[index];
           final posterPath = movie.posterPath;
           return GestureDetector(
             onTap: () {

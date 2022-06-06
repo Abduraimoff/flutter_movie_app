@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: kPrimaryColor,
           ),
         ),
-        home: const HomePage(),
+        home: const AuthPage(),
         routes: {
           '/auth': (context) => const AuthPage(),
           '/home_page': (context) => const HomePage(),

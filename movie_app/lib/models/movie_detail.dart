@@ -1,5 +1,10 @@
 import 'dart:convert';
 
+import 'cast.dart';
+
+
+
+
 class MovieDetail {
   final int id;
   final String title;
@@ -14,6 +19,7 @@ class MovieDetail {
   final String voteCount;
 
   String? trailerId;
+  List<Cast>? castList;
 
   MovieDetail({
     required this.id,
@@ -28,24 +34,10 @@ class MovieDetail {
     required this.voteAverage,
     required this.voteCount,
     this.trailerId,
+    this.castList,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'backdrop_path': backdropPath,
-      'budget': budget,
-      'home_page': homePage,
-      'original_title': originalTitle,
-      'overview': overview,
-      'release_date': releaseDate,
-      'runtime': runtime,
-      'vote_average': voteAverage,
-      'vote_count': voteCount,
-      'trailerId': trailerId,
-    };
-  }
+  
 
   factory MovieDetail.fromMap(Map<String, dynamic> map) {
     return MovieDetail(
@@ -64,7 +56,7 @@ class MovieDetail {
     );
   }
 
-  String toJson() => json.encode(toMap());
+
 
   factory MovieDetail.fromJson(String source) =>
       MovieDetail.fromMap(json.decode(source));

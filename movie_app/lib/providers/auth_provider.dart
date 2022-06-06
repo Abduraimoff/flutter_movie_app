@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../data_provider/session_data_provider.dart';
 import '../domain/api_client/api_client.dart';
 
-class AuthProvider extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier  {
   final _apiClient = ApiClient();
   final _sessionDataProvider = SessionDataProvider();
 
@@ -33,12 +33,14 @@ class AuthProvider extends ChangeNotifier {
 
     String? sessionId;
     try {
-      final sessionId =
-          await _apiClient.auth(username: login, password: password);
+       sessionId = await _apiClient.auth(
+        username: login,
+        password: password,
+      );
     } catch (e) {
       _errorMesssage = '$e';
     }
-    print(sessionId);
+
     _isAuthProgress = false;
 
     if (_errorMesssage != null) {
@@ -54,6 +56,6 @@ class AuthProvider extends ChangeNotifier {
 
     await _sessionDataProvider.setSessionId(sessionId);
 
-    // unawaited(Navigator.of(context).pushReplacementNamed('/main'));a
+    unawaited(Navigator.of(context).pushReplacementNamed('/home_page'));
   }
 }

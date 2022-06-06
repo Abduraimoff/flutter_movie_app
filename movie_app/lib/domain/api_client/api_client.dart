@@ -53,7 +53,7 @@ class ApiClient {
       required String requestToken}) async {
     print('validateUser');
     final url = Uri.parse(
-        'https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=$_apiKey');
+        '$_host/authentication/token/validate_with_login?api_key=$_apiKey');
 
     final parameters = <String, dynamic>{
       'username': username,
@@ -71,7 +71,7 @@ class ApiClient {
   Future<String> _makeSession({required String requestToken}) async {
     print('makeSession');
     final url = Uri.parse(
-      'https://api.themoviedb.org/3/authentication/session/new?api_key=$_apiKey',
+      '$_host/authentication/session/new?api_key=$_apiKey',
     );
 
     final parameters = <String, dynamic>{'request_token': requestToken};
@@ -87,7 +87,7 @@ class ApiClient {
     print('NowPlayingMovie');
     try {
       final url = Uri.parse(
-          'https://api.themoviedb.org/3/movie/now_playing?api_key=3aa5c01abcf1e72b1bb20e560dff6885&language=en-US&page=$page');
+          '$_host/movie/now_playing?api_key=$_apiKey&language=en-US&page=$page');
 
       final response = await http.get(url);
       var movies = NowPlayingMovies.fromJson(response.body);
@@ -102,7 +102,7 @@ class ApiClient {
     print('getMovieByGenre');
     try {
       final url = Uri.parse(
-          'https://api.themoviedb.org/3/movie/popular?api_key=3aa5c01abcf1e72b1bb20e560dff6885&language=en-US&page=$page');
+          '$_host/movie/popular?api_key=$_apiKey&language=en-US&page=$page');
       final response = await http.get(url);
       var movies = PopularMovies.fromJson(response.body);
 
@@ -115,7 +115,7 @@ class ApiClient {
   Future<UpcomingMovies> getUpcomingMovies(int page) async {
     try {
       final url = Uri.parse(
-          'https://api.themoviedb.org/3/movie/upcoming?api_key=3aa5c01abcf1e72b1bb20e560dff6885&language=en-US&page=$page');
+          '$_host/movie/upcoming?api_key=$_apiKey&language=en-US&page=$page');
       final response = await http.get(url);
       var movies = UpcomingMovies.fromJson(response.body);
 
@@ -127,8 +127,8 @@ class ApiClient {
 
   Future<List<Genre>> getGenres() async {
     try {
-      final url = Uri.parse(
-          'https://api.themoviedb.org/3/genre/movie/list?api_key=3aa5c01abcf1e72b1bb20e560dff6885&language=en-US');
+      final url =
+          Uri.parse('$_host/genre/movie/list?api_key=$_apiKey&language=en-US');
 
       final response = await http.get(url);
       final body = response.body;
@@ -144,8 +144,7 @@ class ApiClient {
 
   Future<List<Person>> getTrendingPerson() async {
     try {
-      final url = Uri.parse(
-          'https://api.themoviedb.org/3/trending/person/week?api_key=3aa5c01abcf1e72b1bb20e560dff6885');
+      final url = Uri.parse('$_host/trending/person/week?api_key=$_apiKey');
 
       final response = await http.get(url);
       final body = response.body;
@@ -162,8 +161,8 @@ class ApiClient {
   Future<MovieDetail> getMovieDetail(var movieId) async {
     print('getMovieDetail');
     try {
-      final url = Uri.parse(
-          'https://api.themoviedb.org/3/movie/$movieId?api_key=3aa5c01abcf1e72b1bb20e560dff6885&language=en-US');
+      final url =
+          Uri.parse('$_host/movie/$movieId?api_key=$_apiKey&language=en-US');
       final response = await http.get(url);
       var movieDetail = MovieDetail.fromJson(response.body);
       movieDetail.trailerId = await getYoutubeId(movieId);
@@ -176,8 +175,7 @@ class ApiClient {
 
   Future<String> getYoutubeId(var id) async {
     try {
-      final url = Uri.parse(
-          'https://api.themoviedb.org/3/movie/$id/videos?api_key=3aa5c01abcf1e72b1bb20e560dff6885');
+      final url = Uri.parse('$_host/movie/$id/videos?api_key=$_apiKey');
       final response = await http.get(url);
       final body = response.body;
       final json = jsonDecode(body);
@@ -191,8 +189,7 @@ class ApiClient {
 
   Future<List<Cast>> getCastList(var id) async {
     try {
-      final url = Uri.parse(
-          'https://api.themoviedb.org/3/movie/$id/credits?api_key=3aa5c01abcf1e72b1bb20e560dff6885');
+      final url = Uri.parse('$_host/movie/$id/credits?api_key=$_apiKey');
       final response = await http.get(url);
       final body = response.body;
       final json = jsonDecode(body);

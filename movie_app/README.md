@@ -6,3 +6,4 @@
 ![Снимок экрана (128)](https://user-images.githubusercontent.com/87908979/172319476-ca7f1498-8ed8-4e31-b7ae-c950d730bbe2.jpg)
 ![Снимок экрана (131)](https://user-images.githubusercontent.com/87908979/172319485-1886139f-03cf-4c94-b169-f64594cc02bb.jpg)
 ![Снимок экрана (129)](https://user-images.githubusercontent.com/87908979/172319489-0b02450a-50f2-4ba2-b476-3d2de808241e.jpg)
+![Снимок экрана (130)](https://user-images.githubusercontent.com/87908979/172319558-5a840729-be6f-4570-b812-5f481c35842d.jpg)

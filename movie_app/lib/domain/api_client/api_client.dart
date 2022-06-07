@@ -15,7 +15,7 @@ import '../../models/upcoming_movies.dart';
 class ApiClient {
   static const _host = 'https://api.themoviedb.org/3';
   static const _imageUrl = 'https://image.tmdb.org/t/p/w500/';
-  static const _apiKey = '3aa5c01abcf1e72b1bb20e560dff6885';
+  static const _apiKey = 'YOUR_API_KEY';
 
   static String imageUrl(String path) => _imageUrl + path;
 
